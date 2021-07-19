@@ -7,7 +7,7 @@ def create_spark_views(spark: SparkSession, customers_location: str, products_lo
                        transactions_location: str):
     spark.read.csv(customers_location, header=True).createOrReplaceTempView("customers")
     spark.read.csv(products_location, header=True).createOrReplaceTempView("products")
-    spark.read.json(transactions_location).createOrReplaceTempView("raw_transactions")
+    spark.read.json(transactions_location).createOrReplaceTempView("transactions")
 
 
 def run_transformations(spark: SparkSession, customers_location: str, products_location: str,
@@ -16,7 +16,7 @@ def run_transformations(spark: SparkSession, customers_location: str, products_l
 
 
 def get_latest_transaction_date(spark: SparkSession):
-    result = spark.sql("""SELECT MAX(date_of_purchase) AS date_of_purchase FROM raw_transactions""").collect()[0]
+    result = spark.sql("""SELECT MAX(date_of_purchase) AS date_of_purchase FROM transactions""").collect()[0]
     max_date = result.date_of_purchase
     return max_date
 

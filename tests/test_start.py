@@ -13,7 +13,7 @@ def test_get_latest_transaction_date_returns_most_recent_date(spark):
         Row(date_of_purchase=datetime(2019, 3, 1, 14, 10, 0)),
         Row(date_of_purchase=datetime(2019, 2, 1, 14, 9, 59)),
         Row(date_of_purchase=datetime(2019, 1, 2, 19, 14, 20))
-    ]).createOrReplaceTempView("raw_transactions")
+    ]).createOrReplaceTempView("transactions")
 
     expected = datetime(2019, 3, 1, 14, 10, 0)
     actual = get_latest_transaction_date(spark)
